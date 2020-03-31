@@ -1,0 +1,17 @@
+; Reverses the value at 0x3050 into 0x3051.
+; CSC 225, Assignment 2
+; Given code, Winter '20
+;Shaina Bagri
+0011 0000 0000 0000     ; Start at 0x3000.
+0010 0000 0100 1111     ; 0x3000: Load what's at 0x3050 into R0 (original)
+0010 0110 0100 1101     ; 0x3000: Load what's at 0x304F (0) into R3 (solution)
+0001 0010 1110 0001     ; 0x3001: R1 = R3 ADD 1 (mask)
+0101 0100 0000 0001     ; 0x3002: R2 = R0 AND R1 (and)
+0001 0110 1100 0011     ; 0x3003: R3 = R3 ADD R3
+0001 0100 1010 0000     ; 0x3004: R2 = R2 ADD 0
+0000 0100 0000 0001     ; 0x3005: if R2 is zero, skip to 0x3007
+0001 0110 1110 0001     ; 0x3006: R3 = R3 ADD 1
+0001 0010 0100 0001     ; 0x3007: R1 = R1 ADD R1
+0000 1011 1111 1001     ; 0x3008: if mask is not zero, loop back to 0x3002
+0011 0110 0100 0110     ; 0x3009: Store value of R3 at 0x3051
+1111 0000 0010 0101     ; 0x300A: Halt
